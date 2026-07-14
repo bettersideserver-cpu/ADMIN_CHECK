@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floor Plan Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #f3f5f9;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fb;
+        }
+
+        th {
+            text-align: left;
+            padding: 18px;
+            color: #555;
+        }
+
+        td {
+            padding: 18px;
+            border-top: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        select {
+            width: 180px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .available {
+            background: #22c55e;
+        }
+
+        .sold {
+            background: #ef4444;
+        }
+
+        .reserved {
+            background: #f59e0b;
+        }
+
+        .footer {
+            padding: 20px;
+            background: #fafafa;
+            text-align: right;
+        }
+
+        .save-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: .3s;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media(max-width:700px) {
+
+            table,
+            thead,
+            tbody,
+            tr,
+            td,
+            th {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>🏢 Floor Plan Admin</h1>
+
+        <div>Administrator</div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                Manage Unit Status
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Flat</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Flat101</td>
+
+                        <td>
+
+                            <select data-flat="Flat101">
+
+                                <option>Available</option>
+                                <option>Sold</option>
+                                <option>Reserved</option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Flat102</td>
+
+                        <td>
+
+                            <select data-flat="Flat102">
+
+                                <option>Available</option>
+                                <option selected>Sold</option>
+                                <option>Reserved</option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Flat103</td>
+
+                        <td>
+
+                            <select data-flat="Flat103">
+
+                                <option>Available</option>
+                                <option>Sold</option>
+                                <option selected>Reserved</option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="footer">
+
+                <button class="save-btn">
+                    ✔ Changes Save Automatically
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/admin.js"></script>
+
+</body>
+
+</html>
