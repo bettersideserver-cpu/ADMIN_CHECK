@@ -16,59 +16,50 @@ export async function loadProperties() {
 
     const properties = await getProperties();
 
-    Object.entries(properties).forEach(([id, status]) => {
+   for (const [id, status] of Object.entries(properties)) {
 
-        const row = document.createElement("tr");
+    const row = document.createElement("tr");
 
-        row.innerHTML = `
+    row.innerHTML = `
 
-            <td>${id}</td>
+        <td>${id}</td>
 
-            <td>
+        <td>
 
-                <select data-id="${id}">
+            <select data-id="${id}"></select>
 
-                </select>
+        </td>
 
-            </td>
+    `;
 
-        `;
+    const select = row.querySelector("select");
 
-        const select = row.querySelector("select");
+    const categories = await getCategories();
 
-        const select = row.querySelector("select");
+    Object.keys(categories).forEach(category => {
 
-        const categories = await getCategories();
+        const option = document.createElement("option");
 
-        Object.keys(categories).forEach(category => {
+        option.value = category;
 
-            const option = document.createElement("option");
+        option.textContent = category;
 
-            option.value = category;
+        if (category === status) {
+            option.selected = true;
+        }
 
-            option.textContent = category;
-
-            if (category === status) {
-
-                option.selected = true;
-
-            }
-
-            select.appendChild(option);
-
-        });
-
-        select.onchange = async () => {
-
-            await updateProperty(
-                id,
-                select.value
-            );
-
-        };
-
-        table.appendChild(row);
+        select.appendChild(option);
 
     });
+
+    select.onchange = async () => {
+
+        await updateProperty(id, select.value);
+
+    };
+
+    table.appendChild(row);
+
+}
 
 }
