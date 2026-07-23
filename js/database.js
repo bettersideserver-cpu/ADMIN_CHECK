@@ -30,11 +30,11 @@ const CATEGORY_COLLECTION = "categories";
 // ==========================================
 
 const DEFAULT_PROPERTIES = {
-
-    Flat101: "Available",
-    Flat102: "Sold",
-    Flat103: "Reserved"
-
+    Anchor_Store: "Available",
+    Retail_x5F_Area_x5F_1: "Available",
+    Retail_x5F_Area_x5F_2: "Available",
+    Retail_x5F_Area_x5F_3: "Available",
+    Retail_x5F_Area_x5F_4: "Available"
 };
 
 const DEFAULT_CATEGORIES = {
@@ -381,6 +381,22 @@ export async function checkExpiredVisitors() {
                 }
 
             );
+
+        }
+
+    }
+
+}
+
+export async function syncProperties(propertyIds) {
+
+    const properties = await getProperties();
+
+    for (const id of propertyIds) {
+
+        if (!properties[id]) {
+
+            await updateProperty(id, "Available");
 
         }
 

@@ -1,7 +1,6 @@
 const nameInput = document.getElementById("name");
 const phoneInput = document.getElementById("phone");
 const emailInput = document.getElementById("email");
-
 import {
     addVisitor,
     getVisitor,
@@ -11,6 +10,9 @@ import {
     initializeDatabase
 } from "./database.js";
 
+import {
+    updateFloorColors
+} from "./property.js";
 
 // ==========================
 // Elements
@@ -27,7 +29,7 @@ const verifyPhone = document.getElementById("verifyPhone");
 
 const expired = document.getElementById("expiredScreen");
 
-const floor = document.getElementById("floorContainer");
+const floor = document.getElementById("floorWrapper");
 
 const timer = document.getElementById("timer");
 
@@ -38,6 +40,36 @@ const legend = document.getElementById("legend");
 // ==========================
 
 let timerInterval;
+
+await updateFloorColors();
+
+let properties = await getProperties();
+
+document.querySelectorAll(".unit").forEach(unit => {
+
+    unit.addEventListener("mousemove", (e) => {
+
+        tooltip.style.display = "block";
+
+        tooltip.style.left = e.pageX + 15 + "px";
+        tooltip.style.top = e.pageY + 15 + "px";
+
+        const status = properties[unit.id] || "Unknown";
+
+        tooltip.innerHTML = `
+            <strong>${unit.id.replace(/_x5F_/g, " ").replace(/_/g, " ")}</strong>
+            <br>
+            Status : ${status}
+        `;
+    });
+
+    unit.addEventListener("mouseleave", () => {
+
+        tooltip.style.display = "none";
+
+    });
+
+});
 
 // ==========================
 
@@ -97,7 +129,7 @@ async function checkApproval() {
 
     }
 
-   const visitor = await getVisitor(id);
+    const visitor = await getVisitor(id);
 
     if (!visitor) {
 
@@ -203,10 +235,26 @@ async function openFloor(visitor) {
 
     floor.style.display = "block";
 
-await colorSVG();
+    // Load legend
+    const categories = await getCategories();
+
+    legend.innerHTML = "";
+
+    Object.entries(categories).forEach(([name, color]) => {
+
+        legend.innerHTML += `
+            <div class="legend-item">
+                <span class="legend-color" style="background:${color}"></span>
+                <span>${name}</span>
+            </div>
+        `;
+
+    });
+
+    // Color SVG
+    await updateFloorColors();
 
     startTimer(visitor);
-
 }
 
 // ==========================
@@ -258,8 +306,8 @@ function startTimer(visitor) {
 
 async function colorSVG() {
 
-   const properties = await getProperties();
-const categories = await getCategories();
+    const properties = await getProperties();
+    const categories = await getCategories();
 
     legend.innerHTML = "";
 
@@ -330,6 +378,7 @@ const categories = await getCategories();
 
 setInterval(async () => {
 
-    await colorSVG();
+    properties = await getProperties();
+    await updateFloorColors();
 
-}, 1000);
+}, 200);
